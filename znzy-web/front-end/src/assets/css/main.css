@@ -1,3 +1,162 @@
+/* 导入现代字体 */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: theme('colors.primary');
+    --color-secondary: theme('colors.secondary');
+    --color-accent: theme('colors.accent');
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    font-family: theme('fontFamily.sans');
+    font-weight: 400;
+    line-height: 1.6;
+    color: theme('colors.gray.800');
+    background-color: theme('colors.light.50');
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* 暗色模式基础样式 */
+  .dark body {
+    color: theme('colors.light.100');
+    background-color: theme('colors.dark.900');
+  }
+
+  /* 标题样式 */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: theme('fontFamily.display');
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  /* 链接样式 */
+  a {
+    color: theme('colors.primary');
+    transition: all 0.3s ease;
+  }
+
+  a:hover {
+    color: theme('colors.primary/80');
+  }
+
+  /* 输入框和按钮的基础样式重置 */
+  input, textarea, select, button {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  /* 图片默认样式 */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+@layer components {
+  /* 现代化卡片样式 */
+  .modern-card {
+    @apply bg-white dark:bg-dark-800 rounded-xl shadow-modern p-6 transition-all duration-300 hover:shadow-hover;
+  }
+
+  /* 按钮样式 */
+  .modern-button {
+    @apply px-5 py-2.5 rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50;
+  }
+
+  .primary-button {
+    @apply modern-button bg-primary text-white hover:bg-primary/90;
+  }
+
+  .secondary-button {
+    @apply modern-button bg-secondary text-white hover:bg-secondary/90;
+  }
+
+  .outline-button {
+    @apply modern-button bg-transparent border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-dark-700;
+  }
+
+  /* 输入框样式 */
+  .modern-input {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-800 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300;
+  }
+
+  /* 容器样式 */
+  .content-container {
+    @apply container mx-auto px-4 py-8 max-w-7xl;
+  }
+
+  /* 标题下划线装饰 */
+  .title-decoration {
+    @apply relative inline-block;
+  }
+
+  .title-decoration::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-1/2 h-1 bg-primary rounded-full;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+  }
+
+  .backdrop-blur-md {
+    backdrop-filter: blur(8px);
+  }
+
+  .backdrop-blur-lg {
+    backdrop-filter: blur(12px);
+  }
+
+  /* 暗色模式的背景模糊 */
+  .dark .dark-backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+    background-color: rgba(31, 41, 55, 0.7);
+  }
+
+  .dark .dark-backdrop-blur-md {
+    backdrop-filter: blur(8px);
+    background-color: rgba(31, 41, 55, 0.8);
+  }
+
+  /* 动画类 */
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  /* 响应式间距 */
+  .space-y-responsive > * + * {
+    @apply space-y-4 sm:space-y-6 md:space-y-8;
+  }
+}

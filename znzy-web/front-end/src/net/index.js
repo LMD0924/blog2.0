@@ -42,5 +42,49 @@ function get(url, data = null, success, failure = defaultFailure, error = defaul
     .catch(error)
 }
 
+function put(url, data, success, failure = defaultFailure, error = defaultError) {
+  const params = new URLSearchParams();
+  for (const key in data) {
+    params.append(key, data[key]);
+  }
 
-export {get, post} //导出get post InternalGet方法 供所有组件使用
+  axios.put(url, params, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Authorization": getAuthToken(),
+    },
+    withCredentials: true,
+  })
+    .then(({ data }) => {
+      if (data.success) {
+        success(data.message, data.data);
+      } else {
+        failure(data.message);
+      }
+    })
+    .catch(error);
+}
+
+function del(url, data, success, failure = defaultFailure, error = defaultError) {
+  const config = {
+    withCredentials: true,
+    params: data,
+    headers: {
+      "Authorization": getAuthToken(),
+    },
+  };
+
+  axios.delete(url, config)
+    .then(({ data }) => {
+      if (data.success) {
+        success(data.message, data.data);
+      } else {
+        failure(data.message);
+      }
+    })
+    .catch(error);
+}
+export { get, post, put, del }; //导出get post InternalGet方法 供所有组件使用
+
+
+

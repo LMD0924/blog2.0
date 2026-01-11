@@ -11,12 +11,22 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.2.0",
+    "@tdesign-vue-next/chat": "^0.2.4",
+    "@vueup/vue-quill": "^1.2.0",
     "ant-design-vue": "^4.2.6",
     "axios": "^1.7.9",
+    "dexie": "^4.0.11",
+    "echarts": "^5.6.0",
     "element-plus": "^2.9.3",
+    "marked": "^15.0.11",
+    "md-editor-v3": "^5.2.1",
     "pinia": "^2.3.0",
+    "swiper": "^11.2.2",
+    "tdesign-vue-next": "^1.11.5",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "vue3-carousel": "^0.13.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
