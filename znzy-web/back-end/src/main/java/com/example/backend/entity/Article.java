@@ -12,9 +12,9 @@ import java.util.Date;
 @Data
 public class Article {
     private Integer id,authorId,likes,favorites,views;
-    private String title, content,category,tag;
+    private String title, content;
     private Boolean ispublic;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private Date time;
     @Setter
@@ -24,13 +24,11 @@ public class Article {
         // Default constructor for Jackson deserialization
     }
 
-    public Article(int id, String title, String content, Date date,String category,String tag,Boolean ispublic) {
+    public Article(int id, String title, String content, Date date,Boolean ispublic) {
         this.title = title;
         this.content = content;
         this.time = date;
         this.authorId = id;
-        this.category = category;
-        this.tag = tag;
         this.ispublic = ispublic;
     }
 }

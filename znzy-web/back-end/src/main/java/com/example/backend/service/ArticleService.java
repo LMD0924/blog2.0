@@ -1,13 +1,14 @@
 package com.example.backend.service;
 
 import com.example.backend.entity.Article;
+import com.example.backend.entity.ArticleInfo;
 import com.example.backend.entity.UserAndArticle;
 
 import java.util.Date;
 import java.util.List;
 
 public interface ArticleService {
-    int InsertArticle(Article article);
+    int InsertArticle(Article article, ArticleInfo articleInfo);
     List<UserAndArticle> getAllArticles();
     Article getArticleById(Integer userId,Integer id);
     //增加文章的点赞数
@@ -29,8 +30,8 @@ public interface ArticleService {
     //减少文章的收藏
     int decrementArticleFavorites(Integer id);
     int deleteFavorite(Integer userId,Integer articleId);
-    //更新文章
-    int updateArticle(Integer id,Integer authorId,String title,String content,Date time,String tag,String category,Boolean ispublic);
+    //更新文章（含标签与分类）
+    int updateArticle(Integer id,Integer authorId,String title,String content,Date time,String tag,String classification,Boolean ispublic);
     //删除文章
     int deleteArticle(Integer id,Integer authorId);
     List<Article> getArticlesByUserId(int userId);
@@ -39,4 +40,7 @@ public interface ArticleService {
     List<Article> getFavoriteArticlesByUserId(int userId);
     //获取浏览量前五条
     List<Article> getTopArticles();
+    
+    // 文章搜索
+    List<Article> searchArticlesByTitle(String keyword);
 }

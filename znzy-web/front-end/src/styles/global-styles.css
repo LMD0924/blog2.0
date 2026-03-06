@@ -1,0 +1,192 @@
+/* styles/global-styles.css */
+
+/* 基础样式变量 */
+:root {
+    --card-opacity: 0.87;
+    --card-blur: 0px;
+    --bg-image-url: none;
+    --primary-color: #3b82f6;
+    --secondary-color: #10b981;
+    --tertiary-color: #8b5cf6;
+    --accent-color: #f59e0b;
+}
+
+/* 暗色模式变量 */
+.dark {
+    --primary-color: #60a5fa;
+    --secondary-color: #34d399;
+    --tertiary-color: #a78bfa;
+    --accent-color: #fbbf24;
+}
+
+/* ========== 背景样式 ========== */
+
+/* 默认背景 */
+.bg-default {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.dark .bg-default {
+    background: linear-gradient(135deg, #1a1c20 0%, #2d3748 100%);
+}
+
+/* 渐变背景 */
+.bg-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.dark .bg-gradient {
+    background: linear-gradient(135deg, #434190 0%, #553c9a 100%);
+}
+
+/* 图片背景 */
+.bg-image-1,
+.bg-image-2,
+.bg-image-3,
+.bg-image-4,
+.bg-custom {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+
+/* 背景图片遮罩层，确保文字可读 */
+.bg-image-1::before,
+.bg-image-2::before,
+.bg-image-3::before,
+.bg-image-4::before,
+.bg-custom::before,
+.bg-color::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.dark .bg-image-1::before,
+.dark .bg-image-2::before,
+.dark .bg-image-3::before,
+.dark .bg-image-4::before,
+.dark .bg-custom::before,
+.dark .bg-color::before {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.bg-image-1 {
+    background-image: var(--bg-image-url);
+}
+
+.bg-image-2 {
+    background-image: var(--bg-image-url);
+}
+
+.bg-image-3 {
+    background-image: var(--bg-image-url);
+}
+
+.bg-image-4 {
+    background-image: var(--bg-image-url);
+}
+
+.bg-custom {
+    background-image: var(--bg-image-url);
+}
+
+/* 自定义颜色背景 */
+.bg-color {
+    background-color: var(--bg-color-value);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+
+/* ========== 卡片样式 ========== */
+
+/* 基础卡片样式 */
+.global-card {
+    background-color: rgba(255, 255, 255, var(--card-opacity));
+    backdrop-filter: blur(var(--card-blur));
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+}
+
+.dark .global-card {
+    background-color: rgba(31, 41, 55, var(--card-opacity));
+}
+
+/* 卡片悬停效果 */
+.global-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* 现代卡片样式 */
+[data-card-style="modern"] .global-card {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, var(--card-opacity)),
+            rgba(255, 255, 255, calc(var(--card-opacity) - 0.2))
+    );
+}
+
+.dark[data-card-style="modern"] .global-card {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(
+            135deg,
+            rgba(31, 41, 55, var(--card-opacity)),
+            rgba(17, 24, 39, calc(var(--card-opacity) - 0.1))
+    );
+}
+
+/* 毛玻璃效果 */
+.glass-effect {
+    background: rgba(255, 255, 255, var(--card-opacity));
+    backdrop-filter: blur(var(--card-blur));
+    -webkit-backdrop-filter: blur(var(--card-blur));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass-effect {
+    background: rgba(31, 41, 55, var(--card-opacity));
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ========== 动画效果 ========== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+}

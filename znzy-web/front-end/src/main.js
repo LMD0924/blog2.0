@@ -10,6 +10,8 @@ import 'element-plus/dist/index.css'
 import App from './App.vue'
 import router from './router'
 import axios from "axios";
+import './styles/global-styles.css'
+import {styleStore} from "@/stores/styleStore.js";
 
 axios.defaults.baseURL = 'http://localhost:8080'//设置全局的基础路径
 
@@ -21,4 +23,10 @@ app.config.globalProperties.$axios = axios
 app.use(createPinia())
 app.use(router).use(ElementPlus).use(Antd);
 
+
+// 初始化全局样式
+styleStore.init()
+
+// 将样式 store 挂载到全局，方便在组件中使用
+app.config.globalProperties.$styleStore = styleStore
 app.mount('#app')

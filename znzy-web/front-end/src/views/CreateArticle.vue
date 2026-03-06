@@ -1,7 +1,7 @@
 <script setup>
 import { message } from "ant-design-vue";
 import {ref, reactive} from "vue";
-import {get, post} from "@/net/index.js";
+import {get, post, postJSON} from "@/net/index.js";
 import { MdEditor } from "md-editor-v3";
 import 'md-editor-v3/lib/style.css';
 import router from "@/router/index.js";
@@ -15,7 +15,7 @@ const formState = reactive({
   tags: '',
   content: '',
   isPublic: true,
-  time:new Date().toISOString()
+  time: new Date().toISOString()
 });
 
 const getCurrentUserId = async () => {
@@ -49,17 +49,40 @@ const handleSubmit = async () => {
       return;
     }
 
-    post('api/article/addArticle',
+    // 处理标签和分类
+    const tagsArray = formState.tags
+      ? formState.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
+      : [];
+    const categoryArray = formState.category
+      ? formState.category.split(',').map(cat => cat.trim()).filter(cat => cat)
+      : [];
+
+    // 创建文章对象
+    const article = {
+      title: formState.title,
+      content: formState.content,
+      ispublic: formState.isPublic,
+      authorId: userId,
+      time: new Date().toISOString()
+    };
+
+    // 创建文章信息对象
+    const articleInfo = {
+      authorId: userId,
+      tag: tagsArray.join(','),
+      classification: categoryArray.join(','),
+      createTime: new Date().toISOString()
+    };
+
+    postJSON('api/article/addArticle',
       {
-        title: formState.title,
-        category: formState.category,
-        tag: formState.tags, // 直接使用字符串
-        content: formState.content,
-        ispublic: formState.isPublic,
-        authorId: userId,
+        article: article,
+        articleInfo: articleInfo
       }, (message, data) => {
         messageApi.success(message);
-        router.push('/Article');
+        setTimeout(()=>{
+          router.push('/Article');
+        },1000)
       })
   } catch (error) {
     console.error("添加文章失败", error);
@@ -71,6 +94,7 @@ const handleSubmit = async () => {
 const rules = {
   title: [{ required: true, message: '请输入文章标题', trigger: 'blur' }],
   category: [{ required: true, message: '请输入文章分类', trigger: 'blur' }],
+  tags: [{ required: true, message: '请输入文章标签', trigger: 'blur' }],
   content: [{ required: true, message: '请输入文章内容', trigger: 'blur' }]
 };
 
@@ -113,7 +137,7 @@ const handleUploadImage = async (file, insertImage) => {
     </div>
 
     <!-- 表单卡片 -->
-    <div class="article-card bg-white dark:bg-dark-800 rounded-2xl shadow-modern overflow-hidden animate-slide-up animate-delay-100">
+    <div class="article-card bg-white dark:bg-dark-800 rounded-2xl shadow-modern overflow-hidden animate-slide-up animate-delay-100 global-card">
       <a-form
         :model="formState"
         :rules="rules"
@@ -141,7 +165,7 @@ const handleUploadImage = async (file, insertImage) => {
             />
           </a-form-item>
 
-          <a-form-item label="文章标签" class="flex-1">
+          <a-form-item label="文章标签" name="tags" class="flex-1">
             <a-input
               v-model:value="formState.tags"
               placeholder="请输入标签，多个标签用逗号分隔（如：Vue,JavaScript,前端）"

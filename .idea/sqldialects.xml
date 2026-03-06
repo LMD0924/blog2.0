@@ -5,7 +5,6 @@
     <file url="file://$PROJECT_DIR$/znzy-web/back-end/src/main/java/com/example/backend/mapper/FavoriteMapper.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/znzy-web/back-end/src/main/java/com/example/backend/mapper/LikeMapper.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/znzy-web/back-end/src/main/java/com/example/backend/mapper/PlanMapper.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/znzy-web/back-end/src/main/java/com/example/backend/mapper/TableMapper.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/znzy-web/back-end/src/main/java/com/example/backend/mapper/UserMapper.java" dialect="GenericSQL" />
   </component>
 </project>

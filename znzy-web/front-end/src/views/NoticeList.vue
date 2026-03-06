@@ -317,7 +317,7 @@ onMounted(() => {
     </section>
 
     <!-- 搜索栏 -->
-    <section class="mb-6 bg-white dark:bg-dark-800 rounded-2xl shadow-modern p-6">
+    <section class="mb-6 bg-white dark:bg-dark-800 rounded-2xl shadow-modern p-6 global-card">
       <div class="flex flex-col md:flex-row gap-4 items-center">
         <!-- 关键词搜索 -->
         <div class="w-full md:w-auto md:flex-grow relative">
@@ -360,7 +360,7 @@ onMounted(() => {
     </section>
 
     <!-- 消息列表 -->
-    <section class="bg-white dark:bg-dark-800 rounded-2xl shadow-modern overflow-hidden">
+    <section class="bg-white dark:bg-dark-800 rounded-2xl shadow-modern overflow-hidden global-card">
       <!-- 列表头部 -->
       <div class="border-b border-gray-200 dark:border-dark-700 px-6 py-4 bg-gray-50 dark:bg-dark-700/50">
         <div class="flex items-center justify-between">

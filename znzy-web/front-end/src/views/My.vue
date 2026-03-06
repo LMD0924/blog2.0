@@ -265,7 +265,7 @@ onMounted(() => {
               <div class="flex gap-8">
                 <div class="flex-1">
                   <!-- 个人信息卡片 -->
-                  <div class="bg-white dark:bg-dark-800 rounded-xl shadow-modern overflow-hidden mb-8 transition-all duration-300 hover:shadow-hover">
+                  <div class="bg-white dark:bg-dark-800 rounded-xl shadow-modern overflow-hidden mb-8 transition-all duration-300 hover:shadow-hover global-card">
                     <!-- 头像部分 -->
                     <div class="relative bg-gradient-to-r from-primary-light to-secondary-dark h-48 flex items-center justify-center">
                       <img src="https://s.panlai.com/zb_users/upload/2025/05/20250504011229174629234975517.jpg-arthumbs" alt="背景" class="h-48 w-full object-cover opacity-70">
@@ -508,7 +508,7 @@ onMounted(() => {
             </div>
 
             <!-- 我的文章 -->
-            <div v-show="activeTab === 'articles'" class="bg-white dark:bg-dark-800 rounded-xl shadow-modern overflow-hidden p-6 animate-fade-in animate-delay-200">
+            <div v-show="activeTab === 'articles'" class="bg-white dark:bg-dark-800 rounded-xl shadow-modern overflow-hidden p-6 animate-fade-in animate-delay-200 global-card">
               <h2 class="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100">我的文章</h2>
               <div v-if="articlesLoading" class="flex justify-center py-8">
                 <a-spin size="large" />
@@ -576,7 +576,7 @@ onMounted(() => {
             </div>
 
             <!-- 点赞文章 -->
-            <div v-show="activeTab === 'liked'" class="bg-white dark:bg-dark-800 rounded-xl shadow-modern overflow-hidden p-6 animate-fade-in animate-delay-200">
+            <div v-show="activeTab === 'liked'" class="bg-white dark:bg-dark-800 rounded-xl shadow-modern overflow-hidden p-6 animate-fade-in animate-delay-200 global-card">
               <h2 class="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100">点赞的文章</h2>
               <div v-if="likedLoading" class="flex justify-center py-8">
                 <a-spin size="large" />
@@ -629,7 +629,7 @@ onMounted(() => {
             </div>
 
             <!-- 收藏文章 -->
-            <div v-show="activeTab === 'collected'" class="bg-white dark:bg-dark-800 rounded-xl shadow-modern overflow-hidden p-6 animate-fade-in animate-delay-200">
+            <div v-show="activeTab === 'collected'" class="bg-white dark:bg-dark-800 rounded-xl shadow-modern overflow-hidden p-6 animate-fade-in animate-delay-200 global-card">
               <h2 class="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100">收藏的文章</h2>
               <div v-if="collectedLoading" class="flex justify-center py-8">
                 <a-spin size="large" />

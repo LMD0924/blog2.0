@@ -1,6 +1,8 @@
 package com.example.backend.controller;
 
+import com.example.backend.DTO.ArticleDTO;
 import com.example.backend.entity.Article;
+import com.example.backend.entity.ArticleInfo;
 import com.example.backend.entity.RestBean;
 import com.example.backend.entity.UserAndArticle;
 import com.example.backend.service.ArticleService;
@@ -17,8 +19,8 @@ public class ArticleController {
     @Resource
     ArticleService articleService;
     @PostMapping("addArticle")
-    public RestBean<String> addArticle(Article article){
-        int status=articleService.InsertArticle(article);
+    public RestBean<String> addArticle(@RequestBody ArticleDTO articledto){
+        int status=articleService.InsertArticle(articledto.getArticle(),articledto.getArticleInfo());
         if(status==1) return RestBean.success("成功发布文章");
         else return RestBean.failure(503,"发布文章失败");
     }
@@ -146,5 +148,12 @@ public class ArticleController {
     public RestBean<List<Article>> getTopArticles(){
         List<Article> articles=articleService.getTopArticles();
         return RestBean.success("获取成功",articles);
+    }
+
+    // 文章搜索
+    @GetMapping("/search")
+    public RestBean<List<Article>> searchArticles(@RequestParam("keyword") String keyword) {
+        List<Article> articles = articleService.searchArticlesByTitle(keyword);
+        return RestBean.success("搜索成功", articles);
     }
 }

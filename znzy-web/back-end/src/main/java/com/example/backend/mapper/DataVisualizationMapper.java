@@ -28,7 +28,9 @@ public interface DataVisualizationMapper {
     //获取总的收藏数
     @Select("select sum(favorites) from article where authorId=#{authorId}")
     int getFavoritesCount(Integer authorId);
-    //获取文章的分类
-    @Select("select category,count(*) as count from article where authorId=#{authorId} group by category")
+    //获取文章的分类（基于 article_info.classification）
+    @Select("select classification as category,count(*) as count " +
+            "from article_info where authorId=#{authorId} and classification is not null and classification <> '' " +
+            "group by classification")
     List<CategoryCountDTO> getCategoryCount(Integer authorId);
 }

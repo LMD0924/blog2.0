@@ -156,7 +156,7 @@ onMounted(() => {
         <div class="w-full max-w-md">
             <!-- 登录卡片 - 带有微妙的浮动动画 -->
             <div
-              class="bg-white dark:bg-gray-800 rounded-2xl shadow-modern overflow-hidden transform transition-all duration-500 hover:shadow-xl animate-fadeIn"
+              class="global-card bg-white dark:bg-gray-800 rounded-2xl shadow-modern overflow-hidden transform transition-all duration-500 hover:shadow-xl animate-fadeIn"
               :class="{'animate-float': animateCard}"
             >
               <!-- 渐变顶部装饰条 -->

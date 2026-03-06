@@ -87,11 +87,19 @@ onUnmounted(() => {
 </script>
 
 <template>
-
-
-  <RouterView />
+  <div class="app-container">
+    <RouterView />
+  </div>
 </template>
 
-<style scoped>
+<style>
+.app-container {
+  min-height: 100vh;
+  position: relative;
+}
 
+.app-container > * {
+  position: relative;
+  z-index: 1;
+}
 </style>

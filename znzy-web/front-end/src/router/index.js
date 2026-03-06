@@ -11,6 +11,21 @@ const router = createRouter({
       component: () => import('@/components/Login.vue'),
     },
     {
+      path:'/excel',
+      name:'Excel',
+      component: () => import('@/views/Excel.vue')
+    },
+    {
+      path:'/ai',
+      name:'AI',
+      component: () => import('@/views/AI.vue')
+    },
+    {
+      path:'/OnlineCompiler',
+      name:'OnlineCompiler',
+      component: () => import('@/components/OnlineCompiler.vue')
+    },
+    {
       path: '/Home',
       name: '主界面',
       component: () => import('@/components/Home.vue'),

@@ -106,7 +106,7 @@ const uploadFiles = () => {
 <template>
   <div class="file-upload-container">
     <div
-      class="drop-zone"
+      class="drop-zone global-card"
       :class="{ 'dragging': isDragging }"
       @dragenter="handleDragEnter"
       @dragover="handleDragOver"
@@ -131,7 +131,7 @@ const uploadFiles = () => {
       </div>
     </div>
 
-    <div class="file-list" v-if="files.length > 0">
+    <div class="file-list global-card" v-if="files.length > 0">
       <div class="file-list-header">
         <h3>待上传文件</h3>
         <button

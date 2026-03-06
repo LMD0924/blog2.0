@@ -1,6 +1,7 @@
 package com.example.backend.service.impl;
 
 import com.example.backend.entity.Article;
+import com.example.backend.entity.ArticleInfo;
 import com.example.backend.entity.User;
 import com.example.backend.entity.UserAndArticle;
 import com.example.backend.mapper.ArticleMapper;
@@ -10,6 +11,7 @@ import com.example.backend.mapper.UserMapper;
 import com.example.backend.service.ArticleService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,16 +27,23 @@ public class ArticleServiceImpl implements ArticleService {
     LikeMapper likeMapper;
     @Resource
     FavoriteMapper favoriteMapper;
+
+    //增加文章
     @Override
-    public int InsertArticle(Article article){
-        return articleMapper.insertArticle(article);
+    @Transactional
+    public int InsertArticle(Article article, ArticleInfo articleInfo){
+        int result = articleMapper.insertArticle(article);
+        if(result<=0) return 0;
+        // 设置文章ID到文章信息中
+        articleInfo.setArticleId(article.getId());
+        return articleMapper.insertArticleInfo(articleInfo);
     }
     @Override
     public List<UserAndArticle> getAllArticles() {
         List<UserAndArticle> AllArticles=new ArrayList<>();
         for(Article article : articleMapper.getAllArticles()){
             User user=userMapper.getUserById(article.getAuthorId());
-            AllArticles.add(new UserAndArticle(user,article.getId(),article.getTitle(),article.getContent(),article.getLikes(),article.getFavorites(),article.getViews(),article.getCategory(),article.getTag(),article.getIspublic()));
+            AllArticles.add(new UserAndArticle(user,article.getId(),article.getTitle(),article.getContent(),article.getLikes(),article.getFavorites(),article.getViews(),article.getIspublic()));
         }
         return AllArticles;
     }
@@ -116,12 +125,16 @@ public class ArticleServiceImpl implements ArticleService {
     }
     //更新文章
     @Override
-    public int updateArticle(Integer id,Integer authorId,String title,String content,Date time,String tag,String category,Boolean ispublic){
+    public int updateArticle(Integer id,Integer authorId,String title,String content,Date time,String tag,String classification,Boolean ispublic){
         Article article=articleMapper.getArticleById(id);
         if(article==null||!article.getAuthorId().equals(authorId)){
             return 0;//暂无权限更改
         }
-        return articleMapper.updateArticle(id,authorId,title,content,time,tag,category,ispublic);
+        // 更新文章主体
+        int result = articleMapper.updateArticleCore(id, authorId, title, content, time, ispublic);
+        if(result<=0) return 0;
+        // 更新文章扩展信息
+        return articleMapper.updateArticleInfo(id, authorId, tag, classification);
     }
     //删除文章
     @Override
@@ -149,5 +162,11 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> getTopArticles(){
         return articleMapper.getTopArticles();
+    }
+
+    // 文章搜索
+    @Override
+    public List<Article> searchArticlesByTitle(String keyword) {
+        return articleMapper.searchArticlesByTitle(keyword);
     }
 }

@@ -142,7 +142,7 @@ onMounted(() => {
     <main class="container mx-auto px-4 py-6 max-w-4xl">
       <!-- 欢迎区域 -->
       <div v-if="messages.length === 0" class="text-center py-12">
-        <div class="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto global-card">
           <i class="fas fa-robot text-6xl text-purple-500 mb-4"></i>
           <h2 class="text-3xl font-bold text-gray-800 mb-4">欢迎使用 AI 智能助手</h2>
           <p class="text-gray-600 mb-6">我可以帮助您解答问题、提供建议和进行对话。请在下方的输入框中输入您的问题。</p>
@@ -155,7 +155,7 @@ onMounted(() => {
       </div>
 
       <!-- 聊天消息区域 -->
-      <div v-else class="bg-white rounded-2xl shadow-lg overflow-hidden mb-6">
+      <div v-else class="bg-white rounded-2xl shadow-lg overflow-hidden mb-6 global-card">
         <div class="p-4 border-b border-gray-200 flex justify-between items-center">
           <h3 class="text-lg font-semibold text-gray-800">对话记录</h3>
           <span class="text-sm text-gray-500">{{ messages.length }} 条消息</span>
@@ -203,7 +203,7 @@ onMounted(() => {
       </div>
 
       <!-- 输入区域 -->
-      <div class="bg-white rounded-2xl shadow-lg p-4">
+      <div class="bg-white rounded-2xl shadow-lg p-4 global-card">
         <div class="flex space-x-2">
           <div class="flex-1">
                         <textarea

@@ -132,7 +132,7 @@ onMounted(() => {
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <!-- 左侧：发布表单 -->
       <div class="lg:col-span-2">
-        <div class="bg-white dark:bg-dark-800 rounded-2xl shadow-modern p-6 md:p-8">
+        <div class="bg-white dark:bg-dark-800 rounded-2xl shadow-modern p-6 md:p-8 global-card">
           <h2 class="text-xl font-bold mb-6 relative">
             创建新通知
             <div class="absolute -bottom-2 left-0 w-8 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
@@ -270,7 +270,7 @@ onMounted(() => {
       <!-- 右侧：历史通知和预览 -->
       <div class="space-y-6">
         <!-- 通知预览 -->
-        <div class="bg-white dark:bg-dark-800 rounded-2xl shadow-modern p-6">
+        <div class="bg-white dark:bg-dark-800 rounded-2xl shadow-modern p-6 global-card">
           <h3 class="text-lg font-bold mb-4 relative">
             通知预览
             <div class="absolute -bottom-1 left-0 w-6 h-0.5 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
@@ -310,7 +310,7 @@ onMounted(() => {
         </div>
 
         <!-- 最近通知 -->
-        <div class="bg-white dark:bg-dark-800 rounded-2xl shadow-modern p-6">
+        <div class="bg-white dark:bg-dark-800 rounded-2xl shadow-modern p-6 global-card">
           <h3 class="text-lg font-bold mb-4 relative">
             最近通知
             <div class="absolute -bottom-1 left-0 w-6 h-0.5 bg-gradient-to-r from-primary to-secondary rounded-full"></div>

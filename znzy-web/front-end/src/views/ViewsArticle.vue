@@ -404,7 +404,7 @@ watch(() => state.article.content, (newVal) => {
       <!-- Article navigation (left) -->
       <aside class="lg:w-64 flex-shrink-0 hidden lg:block">
         <div class="sticky top-20">
-          <div class="bg-white dark:bg-dark-800 rounded-xl shadow-modern p-6 animate-fade-in animate-delay-100">
+          <div class="bg-white dark:bg-dark-800 rounded-xl shadow-modern p-6 animate-fade-in animate-delay-100 global-card">
             <h3 class="font-bold text-lg mb-4 flex items-center">
               <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -437,7 +437,7 @@ watch(() => state.article.content, (newVal) => {
       </aside>
 
       <!-- Article content (middle) -->
-      <article class="flex-1 bg-white dark:bg-dark-800 rounded-xl shadow-modern overflow-hidden animate-fade-in">
+      <article class="flex-1 bg-white dark:bg-dark-800 rounded-xl shadow-modern overflow-hidden animate-fade-in global-card">
         <!-- Article header -->
         <header class="p-8 border-b border-gray-100 dark:border-dark-700">
           <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
@@ -563,7 +563,7 @@ watch(() => state.article.content, (newVal) => {
       <aside class="lg:w-80 flex-shrink-0">
         <div class="sticky top-20 space-y-6">
           <!-- Comment form -->
-          <div class="bg-white dark:bg-dark-800 rounded-xl shadow-modern p-6 animate-fade-in animate-delay-200">
+          <div class="bg-white dark:bg-dark-800 rounded-xl shadow-modern p-6 animate-fade-in animate-delay-200 global-card">
             <h3 class="font-bold text-lg mb-4 flex items-center">
               <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
@@ -585,7 +585,7 @@ watch(() => state.article.content, (newVal) => {
           </div>
 
           <!-- Comments list -->
-          <div class="bg-white dark:bg-dark-800 rounded-xl shadow-modern p-6 animate-fade-in animate-delay-300">
+          <div class="bg-white dark:bg-dark-800 rounded-xl shadow-modern p-6 animate-fade-in animate-delay-300 global-card">
             <h3 class="font-bold text-lg mb-6 flex items-center justify-between">
               <div class="flex items-center">
                 <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">

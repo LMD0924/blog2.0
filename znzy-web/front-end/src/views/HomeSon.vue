@@ -1,6 +1,6 @@
 <template>
   <!-- 主要内容 -->
-  <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-dark-900 dark:via-dark-800 dark:to-dark-700">
+  <div class="min-h-screen">
     <!-- 页面加载遮罩 -->
     <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-dark-900 transition-opacity duration-1000"
          :class="{'opacity-0 pointer-events-none': !isLoading}">
@@ -24,152 +24,56 @@
 
     <!-- 页面内容 -->
     <div :class="{'opacity-0': isLoading, 'opacity-100': !isLoading}" class="transition-opacity duration-1000">
-      <div class="container mx-auto px-4 py-12">
-        <!-- 英雄区域 -->
-        <section class="mb-24 text-center relative overflow-hidden">
-          <!-- 背景装饰 -->
-          <div class="absolute inset-0 -z-10">
-            <div class="absolute top-10 left-10 w-96 h-96 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse-slow"></div>
-            <div class="absolute bottom-10 right-10 w-80 h-80 bg-gradient-to-r from-secondary/15 to-primary/15 rounded-full blur-3xl animate-pulse-slow animation-delay-2000"></div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur-2xl"></div>
-          </div>
+      <!-- 英雄区域 -->
+      <section class="min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden">
+        <!-- 背景装饰 -->
+        <div class="absolute inset-0 -z-10">
+          <div class="absolute top-10 left-10 w-96 h-96 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse-slow"></div>
+          <div class="absolute bottom-10 right-10 w-80 h-80 bg-gradient-to-r from-secondary/15 to-primary/15 rounded-full blur-3xl animate-pulse-slow animation-delay-2000"></div>
+          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur-2xl"></div>
+        </div>
 
-          <div class="relative">
-            <!-- 欢迎徽章 -->
-            <div class="inline-flex items-center px-6 py-3 bg-white/80 dark:bg-dark-800/80 backdrop-blur-lg rounded-full border border-white/20 dark:border-dark-700/20 shadow-2xl mb-8 transition-all duration-1000"
-                 :style="{
-                   opacity: contentLoaded ? 1 : 0,
-                   transform: `translateY(${contentLoaded ? '0' : '20px'})`
-                 }">
-              <div class="w-2 h-2 bg-primary rounded-full mr-3 animate-ping"></div>
-              <span class="text-sm font-medium text-primary uppercase tracking-wider">欢迎回来, {{User.account || '访客'}}</span>
-            </div>
-
-            <!-- 主标题 -->
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight transition-all duration-1000 delay-300"
-                :style="{
-                  opacity: contentLoaded ? 1 : 0,
-                  transform: `translateY(${contentLoaded ? '0' : '30px'})`
-                }">
-              <span class="bg-gradient-to-r from-gray-800 via-primary to-secondary dark:from-white dark:via-primary-light dark:to-secondary-light bg-clip-text text-transparent">
-                创造未来
-                <span class="relative inline-block">
-
-                  <svg class="absolute -bottom-4 left-0 w-full" viewBox="0 0 200 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 12C45 4 155 4 196 12" stroke="url(#title-gradient)" stroke-width="4" stroke-linecap="round"/>
-                    <defs>
-                      <linearGradient id="title-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#3b82f6"/>
-                        <stop offset="50%" stop-color="#8b5cf6"/>
-                        <stop offset="100%" stop-color="#ec4899"/>
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </span>
-              </span>
-            </h1>
-
-            <!-- 副标题 -->
-            <p class="text-xl md:text-2xl lg:text-3xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed transition-all duration-1000 delay-500"
+        <div class="relative container mx-auto px-4 py-12">
+          <!-- 欢迎徽章 -->
+          <div class="inline-flex items-center px-6 py-3 bg-white/80 dark:bg-dark-800/80 backdrop-blur-lg rounded-full border border-white/20 dark:border-dark-700/20 shadow-2xl mb-8 transition-all duration-1000"
                :style="{
                  opacity: contentLoaded ? 1 : 0,
                  transform: `translateY(${contentLoaded ? '0' : '20px'})`
                }">
-              探索前沿技术，分享创新思想，构建智能未来
-            </p>
-
-            <!-- CTA 按钮组 -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16 transition-all duration-1000 delay-700"
-                 :style="{
-                   opacity: contentLoaded ? 1 : 0,
-                   transform: `translateY(${contentLoaded ? '0' : '20px'})`
-                 }">
-              <router-link
-                to="/CreateArticle"
-                class="group relative bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105 overflow-hidden"
-              >
-                <span class="relative z-10 flex items-center">
-                  <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                  </svg>
-                  开始创作
-                </span>
-                <div class="absolute inset-0 bg-gradient-to-r from-secondary to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </router-link>
-
-              <router-link
-                to="/Article"
-                class="group relative bg-white/80 dark:bg-dark-800/80 backdrop-blur-xl text-gray-800 dark:text-white px-8 py-4 rounded-2xl font-semibold text-lg border border-white/30 dark:border-dark-700/30 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105"
-              >
-                <span class="relative z-10">探索内容</span>
-              </router-link>
-            </div>
-
-            <!-- 数据统计 -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto transition-all duration-1000 delay-1000"
-                 :style="{
-                   opacity: contentLoaded ? 1 : 0,
-                   transform: `translateY(${contentLoaded ? '0' : '30px'})`
-                 }">
-              <div v-for="(stat, index) in stats" :key="index" class="text-center group">
-                <div class="bg-white/70 dark:bg-dark-800/70 backdrop-blur-xl rounded-2xl p-6 border border-white/20 dark:border-dark-700/20 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
-                  <div class="text-3xl font-bold mb-2" :class="stat.color">{{ stat.value }}</div>
-                  <div class="text-sm text-gray-600 dark:text-gray-400 font-medium">{{ stat.label }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 特性展示 -->
-        <section class="mb-24">
-          <div class="text-center mb-16 transition-all duration-1000 delay-300"
-               :style="{
-                 opacity: contentLoaded ? 1 : 0,
-                 transform: `translateY(${contentLoaded ? '0' : '20px'})`
-               }">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-              为什么选择我们
-            </h2>
-            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              为现代开发者打造的终极技术内容平台
-            </p>
+            <div class="w-2 h-2 bg-primary rounded-full mr-3 animate-ping"></div>
+            <span class="text-sm font-medium text-primary uppercase tracking-wider">欢迎回来, {{User.account || '访客'}}</span>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div v-for="(feature, index) in features" :key="index"
-                 class="group relative transition-all duration-1000"
-                 :style="{
-                   opacity: contentLoaded ? 1 : 0,
-                   transform: `translateY(${contentLoaded ? '0' : '30px'})`,
-                   transitionDelay: `${400 + index * 200}ms`
-                 }">
-              <div class="absolute -inset-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-              <div class="relative bg-white/80 dark:bg-dark-800/80 backdrop-blur-xl rounded-2xl p-8 border border-white/20 dark:border-dark-700/20 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 h-full">
-                <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center shadow-lg mb-6">
-                  <component :is="feature.icon" class="w-8 h-8 text-white" />
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">{{ feature.title }}</h3>
-                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                  {{ feature.description }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <!-- 主标题 -->
+          <h3 class="text-white text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight transition-all duration-1000 delay-300">
+        落叶，Blog
+          </h3>
 
-        <!-- 热门文章 -->
-        <section class="mb-24">
+          <!-- 副标题 -->
+          <p class="text-xl md:text-2xl lg:text-3xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed transition-all duration-1000 delay-500"
+             :style="{
+               opacity: contentLoaded ? 1 : 0,
+               transform: `translateY(${contentLoaded ? '0' : '20px'})`
+             }">
+            <span class="typing-text text-white">{{ displayText }}</span>
+            <span class="typing-cursor">|</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- 热门文章 -->
+      <section class="py-24">
+        <div class="container mx-auto px-4">
           <div class="flex items-center justify-between mb-12 transition-all duration-1000 delay-300"
                :style="{
                  opacity: contentLoaded ? 1 : 0,
                  transform: `translateY(${contentLoaded ? '0' : '20px'})`
                }">
             <div>
-              <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+              <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
                 热门文章
               </h2>
-              <p class="text-xl text-gray-600 dark:text-gray-300">社区最受欢迎的技术内容</p>
+              <p class="text-xl text-white/90">社区最受欢迎的技术内容</p>
             </div>
             <router-link
               to="/articles"
@@ -186,29 +90,29 @@
             <article
               v-for="(article, index) in featuredArticles"
               :key="index"
-              class="group relative bg-white/80 dark:bg-dark-800/80 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-dark-700/20 shadow-2xl hover:shadow-3xl transition-all duration-1000 hover:-translate-y-2"
+              class="group relative bg-white/80 dark:bg-dark-800/80 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-dark-700/20 shadow-2xl hover:shadow-3xl transition-all duration-1000 hover:-translate-y-2 global-card"
               :style="{
                 opacity: contentLoaded ? 1 : 0,
                 transform: `translateY(${contentLoaded ? '0' : '30px'})`,
                 transitionDelay: `${500 + index * 150}ms`
               }"
             >
-              <div class="absolute -inset-4 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+              <div class="absolute -inset-4 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
               <div class="relative">
                 <div class="flex items-center justify-between mb-4">
                   <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">{{ article.category || '技术' }}</span>
-                  <span class="text-sm text-gray-500 dark:text-gray-400">{{ article.date || '最近更新' }}</span>
+                  <span class="text-sm text-white/90">{{ article.date || '最近更新' }}</span>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-primary transition-colors duration-300 line-clamp-2">
                   {{ article.title || '文章标题' }}
                 </h3>
-                <p class="text-gray-600 dark:text-gray-300 mb-6 line-clamp-3 leading-relaxed">
+                <p class="text-white/90 mb-6 line-clamp-3 leading-relaxed">
                   {{ article.excerpt || '文章摘要内容，这里展示了文章的主要内容和亮点...' }}
                 </p>
                 <div class="flex items-center justify-between">
                   <div class="flex items-center space-x-4">
-                    <span class="text-sm text-gray-500 dark:text-gray-400">👁️ 1.2k</span>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">❤️ 86</span>
+                    <span class="text-sm text-white/90">👁️ 1.2k</span>
+                    <span class="text-sm text-white/90">❤️ 86</span>
                   </div>
                   <button
                     @click="goArticleById(article.id)"
@@ -223,91 +127,15 @@
               </div>
             </article>
           </div>
-        </section>
-
-        <!-- 技术栈展示 -->
-        <section class="mb-24">
-          <div class="text-center mb-16 transition-all duration-1000 delay-300"
-               :style="{
-                 opacity: contentLoaded ? 1 : 0,
-                 transform: `translateY(${contentLoaded ? '0' : '20px'})`
-               }">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-              技术生态
-            </h2>
-            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              覆盖全栈开发、云原生、AI 工程等前沿技术领域
-            </p>
-          </div>
-
-          <div class="bg-white/80 dark:bg-dark-800/80 backdrop-blur-xl rounded-3xl p-12 border border-white/20 dark:border-dark-700/20 shadow-2xl transition-all duration-1000 delay-500"
-               :style="{
-                 opacity: contentLoaded ? 1 : 0,
-                 transform: `translateY(${contentLoaded ? '0' : '30px'})`
-               }">
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
-              <div v-for="tech in technologies" :key="tech.name" class="text-center group">
-                <div class="bg-white dark:bg-dark-700 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 dark:border-dark-600">
-                  <div class="text-3xl mb-3">{{ tech.icon }}</div>
-                  <div class="font-semibold text-gray-800 dark:text-white">{{ tech.name }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- CTA 区域 -->
-        <section class="text-center transition-all duration-1000 delay-700"
-                 :style="{
-                   opacity: contentLoaded ? 1 : 0,
-                   transform: `translateY(${contentLoaded ? '0' : '30px'})`
-                 }">
-          <div class="bg-gradient-to-r from-primary to-secondary rounded-3xl p-16 shadow-2xl relative overflow-hidden">
-            <div class="absolute inset-0 bg-black/10"></div>
-            <div class="relative z-10">
-              <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
-                准备好开始您的技术之旅了吗？
-              </h2>
-              <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-                加入成千上万的开发者，探索前沿技术，分享您的见解，共同构建智能未来
-              </p>
-              <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <router-link
-                  to="/register"
-                  class="bg-white text-primary px-8 py-4 rounded-2xl font-semibold text-lg shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105"
-                >
-                  立即加入
-                </router-link>
-                <router-link
-                  to="/about"
-                  class="bg-white/20 text-white px-8 py-4 rounded-2xl font-semibold text-lg border border-white/30 hover:bg-white/30 transition-all duration-500 hover:scale-105"
-                >
-                  了解更多
-                </router-link>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- 页脚 -->
-      <footer class="bg-white/80 dark:bg-dark-800/80 backdrop-blur-xl border-t border-gray-200/50 dark:border-dark-700/50 mt-24 transition-all duration-1000 delay-900"
-              :style="{
-                opacity: contentLoaded ? 1 : 0,
-                transform: `translateY(${contentLoaded ? '0' : '20px'})`
-              }">
-        <!-- 页脚内容保持不变 -->
-        <div class="container mx-auto px-4 py-12">
-          <!-- ... 页脚内容 ... -->
         </div>
-      </footer>
+      </section>
     </div>
   </div>
 </template>
 
 <script setup>
 // 示例数据
-import { onMounted, ref, nextTick } from "vue";
+import { onMounted, ref, nextTick, onUnmounted } from "vue";
 import { get } from "@/net/index.js";
 import { message } from "ant-design-vue";
 import router from "@/router/index.js";
@@ -318,6 +146,18 @@ const featuredArticles = ref([]);
 const latestArticles = ref([]);
 const isLoading = ref(true);
 const contentLoaded = ref(false);
+
+// 打字机效果
+const displayText = ref('');
+const typingTexts = ref([
+  '探索前沿技术，分享创新思想，构建智能未来',
+  '连接全球开发者，共创技术生态，引领行业趋势',
+  '突破技术边界，激发创新潜能，塑造数字未来'
+]);
+let currentTextIndex = 0;
+let currentCharIndex = 0;
+let typingInterval = null;
+let isTyping = true;
 
 // 统计数据
 const stats = ref([
@@ -416,6 +256,47 @@ const goArticleById = (id) => {
   router.push("/view/" + id);
 };
 
+// 打字机效果函数
+const startTypingAnimation = () => {
+  if (typingInterval) clearInterval(typingInterval);
+
+  typingInterval = setInterval(() => {
+    const currentText = typingTexts.value[currentTextIndex];
+
+    if (isTyping) {
+      // 打字阶段
+      if (currentCharIndex < currentText.length) {
+        displayText.value += currentText[currentCharIndex];
+        currentCharIndex++;
+      } else {
+        // 打字完成，切换到删除阶段
+        isTyping = false;
+        setTimeout(() => {
+          isTyping = false;
+        }, 2000); // 停留2秒
+      }
+    } else {
+      // 删除阶段
+      if (currentCharIndex > 0) {
+        displayText.value = currentText.substring(0, currentCharIndex - 1);
+        currentCharIndex--;
+      } else {
+        // 删除完成，切换到下一个文本
+        isTyping = true;
+        currentTextIndex = (currentTextIndex + 1) % typingTexts.value.length;
+      }
+    }
+  }, 100); // 打字速度
+};
+
+// 清理函数
+const cleanupTyping = () => {
+  if (typingInterval) {
+    clearInterval(typingInterval);
+    typingInterval = null;
+  }
+};
+
 onMounted(() => {
   getUserInfo();
   getTopArticles();
@@ -427,10 +308,17 @@ onMounted(() => {
       nextTick(() => {
         setTimeout(() => {
           contentLoaded.value = true;
+          // 内容加载完成后启动打字机效果
+          setTimeout(startTypingAnimation, 500);
         }, 100);
       });
     }
   }, 1500);
+});
+
+// 组件卸载时清理
+onUnmounted(() => {
+  cleanupTyping();
 });
 </script>
 
@@ -552,4 +440,20 @@ onMounted(() => {
 .stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
 .stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
 .stagger-animation > *:nth-child(5) { animation-delay: 0.5s; }
+
+/* 打字机效果 */
+.typing-cursor {
+  animation: blink 1s infinite;
+  font-weight: bold;
+  color: currentColor;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typing-text {
+  display: inline-block;
+}
 </style>

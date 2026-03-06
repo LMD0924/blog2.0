@@ -200,6 +200,7 @@ onUnmounted(() => {
         :notification="notification"
         :duration="5000"
         @close="removeNotification"
+        class="global-card"
       />
     </div>
 

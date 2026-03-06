@@ -113,7 +113,7 @@ const goToPage = (page) => {
 <template>
   <contextHolder />
   <div :class="isDark" class="min-h-screen transition-colors duration-300">
-    <div class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <div class="text-gray-900 dark:text-gray-100 min-h-screen">
       <!-- 主要内容 -->
       <main class="container mx-auto px-4 py-8">
         <!-- 文章列表标题和搜索 -->
@@ -191,7 +191,7 @@ const goToPage = (page) => {
               @click="goArticleById(article.id)"
               v-for="article in paginatedArticles"
               :key="article.id"
-              class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 article-card border border-gray-100 dark:border-gray-700 transform hover:-translate-y-1 animate-delay-100 cursor-pointer"
+              class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 article-card border border-gray-100 dark:border-gray-700 transform hover:-translate-y-1 animate-delay-100 cursor-pointer global-card"
             >
               <!-- 原有网格布局内容 -->
               <div class="flex flex-nowrap">
@@ -260,7 +260,7 @@ const goToPage = (page) => {
               @click="goArticleById(article.id)"
               v-for="article in paginatedArticles"
               :key="article.id"
-              class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 article-card border border-gray-100 dark:border-gray-700 transform hover:-translate-y-1 animate-delay-100 cursor-pointer"
+              class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 article-card border border-gray-100 dark:border-gray-700 transform hover:-translate-y-1 animate-delay-100 cursor-pointer global-card"
             >
               <div class="flex flex-col md:flex-row">
                 <!-- 左侧内容区域 -->

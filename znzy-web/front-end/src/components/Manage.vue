@@ -327,7 +327,7 @@ onMounted(() => {
 
       <!-- 统计卡片 -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/50 shadow-modern animate-fadeIn" style="animation-delay: 0.1s">
+        <div class="global-card bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/50 shadow-modern animate-fadeIn" style="animation-delay: 0.1s">
           <div class="flex items-center justify-between">
             <div>
               <p class="text-sm font-medium text-gray-600 dark:text-gray-400">总用户数</p>
@@ -341,7 +341,7 @@ onMounted(() => {
           </div>
         </div>
 
-        <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/50 shadow-modern animate-fadeIn" style="animation-delay: 0.2s">
+        <div class="global-card bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/50 shadow-modern animate-fadeIn" style="animation-delay: 0.2s">
           <div class="flex items-center justify-between">
             <div>
               <p class="text-sm font-medium text-gray-600 dark:text-gray-400">已审核通过</p>
@@ -355,7 +355,7 @@ onMounted(() => {
           </div>
         </div>
 
-        <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/50 shadow-modern animate-fadeIn" style="animation-delay: 0.3s">
+        <div class="global-card bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/50 shadow-modern animate-fadeIn" style="animation-delay: 0.3s">
           <div class="flex items-center justify-between">
             <div>
               <p class="text-sm font-medium text-gray-600 dark:text-gray-400">待审核用户</p>
@@ -369,7 +369,7 @@ onMounted(() => {
           </div>
         </div>
 
-        <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/50 shadow-modern animate-fadeIn" style="animation-delay: 0.4s">
+        <div class="global-card bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/50 shadow-modern animate-fadeIn" style="animation-delay: 0.4s">
           <div class="flex items-center justify-between">
             <div>
               <p class="text-sm font-medium text-gray-600 dark:text-gray-400">审核未通过</p>
@@ -385,7 +385,7 @@ onMounted(() => {
       </div>
 
       <!-- 搜索和过滤区域 -->
-      <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/50 shadow-modern mb-8 animate-fadeIn">
+      <div class="global-card bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/50 shadow-modern mb-8 animate-fadeIn">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">搜索用户</label>
@@ -437,7 +437,7 @@ onMounted(() => {
       </div>
 
       <!-- 用户列表 -->
-      <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-gray-700/50 shadow-modern overflow-hidden animate-fadeIn">
+      <div class="global-card bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-gray-700/50 shadow-modern overflow-hidden animate-fadeIn">
         <div class="overflow-x-auto">
           <table class="min-w-full">
             <thead class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
@@ -610,7 +610,7 @@ onMounted(() => {
           <div class="absolute inset-0 bg-gray-500/50 dark:bg-gray-900/80 backdrop-blur-sm opacity-75"></div>
         </div>
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-        <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-scale-in">
+        <div class="global-card inline-block align-bottom bg-white dark:bg-gray-800 rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-scale-in">
           <div class="bg-white dark:bg-gray-800 px-6 pt-6 pb-4">
             <div class="sm:flex sm:items-start">
               <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
@@ -671,7 +671,7 @@ onMounted(() => {
           <div class="absolute inset-0 bg-gray-500/50 dark:bg-gray-900/80 backdrop-blur-sm opacity-75"></div>
         </div>
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-        <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-scale-in">
+        <div class="global-card inline-block align-bottom bg-white dark:bg-gray-800 rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-scale-in">
           <div class="bg-white dark:bg-gray-800 px-6 pt-6 pb-4">
             <div class="sm:flex sm:items-start">
               <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-900/30 sm:mx-0 sm:h-10 sm:w-10">

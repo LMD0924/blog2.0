@@ -9,7 +9,18 @@ const defaultError = () => ElMessage.error('发生错误，请联系管理员。
 const defaultFailure = (message) => ElMessage.warning(message) //后端请求返回失败信息时将其打印
 //post请求示例
 function post(url, data, success, failure = defaultFailure, error = defaultError) {//导入请求路径url,请求数据data,以及失败和成功的操作
-  axios.post(url, data, { //使用axios的post请求 传入路径和数据
+  const params = new URLSearchParams();
+  for (const key in data) {
+    if (typeof data[key] === 'object' && data[key] !== null) {
+      for (const subKey in data[key]) {
+        params.append(key + '[' + subKey + ']', data[key][subKey]);
+      }
+    } else {
+      params.append(key, data[key]);
+    }
+  }
+
+  axios.post(url, params, { //使用axios的post请求 传入路径和数据
     headers: {
       "Content-Type": "application/x-www-form-urlencoded", //设置内容类型
       "Authorization": getAuthToken()
@@ -84,6 +95,31 @@ function del(url, data, success, failure = defaultFailure, error = defaultError)
     })
     .catch(error);
 }
+
+// net/index.js
+
+// JSON 请求专用方法
+export const postJSON = (url, params, success, failure) => {
+  axios.post(url, params, {
+    headers: {
+      "Content-Type": "application/json",  // 强制使用 JSON
+      "Authorization": getAuthToken()
+    },
+    withCredentials: true
+  }).then(({data}) => {
+    if (data.success) {
+      success(data.message, data.data, data.status);
+    } else {
+      failure(data.message, data.data, data.status);
+    }
+  }).catch(error => {
+    console.error('请求失败:', error);
+    if (failure) {
+      failure(error.message, null, error.response?.status || 500);
+    }
+  });
+};
+
 export { get, post, put, del }; //导出get post InternalGet方法 供所有组件使用
 
 

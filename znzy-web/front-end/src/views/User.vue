@@ -278,7 +278,7 @@ const favorites = [
     <div class="w-4/5 p-6 transition-all duration-500 ease-in-out transform"
          :class="{ 'opacity-100 translate-y-0': isMounted, 'opacity-0 translate-y-4': !isMounted }">
       <!-- 作者信息 -->
-      <div v-if="activeMenu === 'info'" class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-modern mb-6 transition-all duration-500 hover:shadow-xl border border-gray-100 dark:border-gray-700 animate-delay-100">
+      <div v-if="activeMenu === 'info'" class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-modern mb-6 transition-all duration-500 hover:shadow-xl border border-gray-100 dark:border-gray-700 animate-delay-100 global-card">
         <h2 class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4 flex items-center font-display">
           <span class="w-2 h-8 bg-primary mr-3 rounded-full"></span>
           作者详细信息
@@ -332,7 +332,7 @@ const favorites = [
       </div>
 
       <!-- 作者文章 -->
-      <div v-if="activeMenu === 'articles'" class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-modern mb-6 animate-delay-100 border border-gray-100 dark:border-gray-700">
+      <div v-if="activeMenu === 'articles'" class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-modern mb-6 animate-delay-100 border border-gray-100 dark:border-gray-700 global-card">
         <h2 class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-6 flex items-center font-display">
           <span class="w-2 h-8 bg-primary mr-3 rounded-full"></span>
           作者文章
@@ -380,7 +380,7 @@ const favorites = [
       </div>
 
       <!-- 作品集 -->
-      <div v-if="activeMenu === 'portfolio'" class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-modern mb-6 animate-delay-100 border border-gray-100 dark:border-gray-700">
+      <div v-if="activeMenu === 'portfolio'" class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-modern mb-6 animate-delay-100 border border-gray-100 dark:border-gray-700 global-card">
         <h2 class="text-2xl font-bold bg-gradient-to-r from-secondary to-tertiary bg-clip-text text-transparent mb-6 flex items-center font-display">
           <span class="w-2 h-8 bg-secondary mr-3 rounded-full"></span>
           作品集
@@ -411,7 +411,7 @@ const favorites = [
       </div>
 
       <!-- 收藏夹 -->
-      <div v-if="activeMenu === 'favorites'" class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-modern animate-delay-100 border border-gray-100 dark:border-gray-700">
+      <div v-if="activeMenu === 'favorites'" class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-modern animate-delay-100 border border-gray-100 dark:border-gray-700 global-card">
         <h2 class="text-2xl font-bold bg-gradient-to-r from-tertiary to-primary bg-clip-text text-transparent mb-6 flex items-center font-display">
           <span class="w-2 h-8 bg-tertiary mr-3 rounded-full"></span>
           收藏夹

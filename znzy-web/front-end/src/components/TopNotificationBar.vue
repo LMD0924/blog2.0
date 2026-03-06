@@ -144,7 +144,7 @@ onUnmounted(() => {
     :class="[
       'fixed top-16 right-4 z-[9999] w-96 transition-all duration-500 ease-out transform',
       'rounded-2xl border backdrop-blur-lg overflow-hidden cursor-pointer shadow-xl',
-      'hover:scale-105 hover:shadow-2xl active:scale-95',
+      'hover:scale-105 hover:shadow-2xl active:scale-95 global-card',
       isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0',
       isHiding ? 'translate-x-full opacity-0 scale-95' : '',
     ]"

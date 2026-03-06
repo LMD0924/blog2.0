@@ -20,7 +20,7 @@
       <div
         v-for="(memo, index) in memos"
         :key="index"
-        class="relative bg-white dark:bg-dark-800 rounded-xl shadow-modern hover:shadow-hover transition-all duration-300 overflow-hidden transform hover:-translate-y-2 animate-fade-in animate-delay-100 border border-gray-100 dark:border-dark-700"
+        class="relative bg-white dark:bg-dark-800 rounded-xl shadow-modern hover:shadow-hover transition-all duration-300 overflow-hidden transform hover:-translate-y-2 animate-fade-in animate-delay-100 border border-gray-100 dark:border-dark-700 global-card"
         :class="{'border-l-4 border-primary': memo.priority === 'high', 'border-l-4 border-secondary': memo.priority === 'medium', 'border-l-4 border-tertiary': memo.priority === 'low'}"
       >
         <!-- 备忘录内容 -->
@@ -112,7 +112,7 @@
       v-if="showCreateModal"
       class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity duration-300 animate-fade-in"
     >
-      <div class="bg-white dark:bg-dark-800 rounded-xl shadow-xl w-full max-w-md mx-4 transition-all duration-300 transform animate-slide-up">
+      <div class="bg-white dark:bg-dark-800 rounded-xl shadow-xl w-full max-w-md mx-4 transition-all duration-300 transform animate-slide-up global-card">
         <div class="p-6 ">
           <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
             {{ editingIndex === null ? '新建备忘录' : '编辑备忘录' }}
