@@ -31,7 +31,7 @@ public interface ArticleService {
     int decrementArticleFavorites(Integer id);
     int deleteFavorite(Integer userId,Integer articleId);
     //更新文章（含标签与分类）
-    int updateArticle(Integer id,Integer authorId,String title,String content,Date time,String tag,String classification,Boolean ispublic);
+    int updateArticle(Integer id,Integer authorId,String title,String content,Date time,Boolean ispublic);
     //删除文章
     int deleteArticle(Integer id,Integer authorId);
     List<Article> getArticlesByUserId(int userId);
@@ -43,4 +43,10 @@ public interface ArticleService {
     
     // 文章搜索
     List<Article> searchArticlesByTitle(String keyword);
+    
+    // 根据标签查询文章
+    List<Article> getArticlesByTag(String tag);
+    
+    // 根据分类查询文章
+    List<Article> getArticlesByCategory(String category);
 }

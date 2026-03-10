@@ -5,6 +5,7 @@ import com.example.backend.entity.ArticleInfo;
 import com.example.backend.entity.User;
 import com.example.backend.entity.UserAndArticle;
 import com.example.backend.mapper.ArticleMapper;
+import com.example.backend.mapper.ArticleInfoMapper;
 import com.example.backend.mapper.FavoriteMapper;
 import com.example.backend.mapper.LikeMapper;
 import com.example.backend.mapper.UserMapper;
@@ -21,6 +22,8 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
     @Resource
     ArticleMapper articleMapper;
+    @Resource
+    ArticleInfoMapper articleInfoMapper;
     @Resource
     UserMapper userMapper;
     @Resource
@@ -43,7 +46,7 @@ public class ArticleServiceImpl implements ArticleService {
         List<UserAndArticle> AllArticles=new ArrayList<>();
         for(Article article : articleMapper.getAllArticles()){
             User user=userMapper.getUserById(article.getAuthorId());
-            AllArticles.add(new UserAndArticle(user,article.getId(),article.getTitle(),article.getContent(),article.getLikes(),article.getFavorites(),article.getViews(),article.getIspublic()));
+            AllArticles.add(new UserAndArticle(user,article.getId(),article.getTitle(),article.getContent(),article.getLikes(),article.getFavorites(),article.getViews(),article.getIspublic(), article.getTime()));
         }
         return AllArticles;
     }
@@ -125,16 +128,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
     //更新文章
     @Override
-    public int updateArticle(Integer id,Integer authorId,String title,String content,Date time,String tag,String classification,Boolean ispublic){
+    public int updateArticle(Integer id,Integer authorId,String title,String content,Date time,Boolean ispublic){
         Article article=articleMapper.getArticleById(id);
         if(article==null||!article.getAuthorId().equals(authorId)){
             return 0;//暂无权限更改
         }
         // 更新文章主体
-        int result = articleMapper.updateArticleCore(id, authorId, title, content, time, ispublic);
-        if(result<=0) return 0;
-        // 更新文章扩展信息
-        return articleMapper.updateArticleInfo(id, authorId, tag, classification);
+        return articleMapper.updateArticleCore(id, authorId, title, content, time, ispublic);
     }
     //删除文章
     @Override
@@ -168,5 +168,37 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> searchArticlesByTitle(String keyword) {
         return articleMapper.searchArticlesByTitle(keyword);
+    }
+
+    // 根据标签查询文章
+    @Override
+    public List<Article> getArticlesByTag(String tag) {
+        // 先获取所有文章信息
+        List<Article> allArticles = articleMapper.getAllArticles();
+        List<Article> result = new ArrayList<>();
+        
+        for (Article article : allArticles) {
+            ArticleInfo info = articleInfoMapper.getArticleInfoByArticleId(article.getId());
+            if (info != null && info.getTag() != null && info.getTag().contains(tag)) {
+                result.add(article);
+            }
+        }
+        return result;
+    }
+
+    // 根据分类查询文章
+    @Override
+    public List<Article> getArticlesByCategory(String category) {
+        // 先获取所有文章信息
+        List<Article> allArticles = articleMapper.getAllArticles();
+        List<Article> result = new ArrayList<>();
+        
+        for (Article article : allArticles) {
+            ArticleInfo info = articleInfoMapper.getArticleInfoByArticleId(article.getId());
+            if (info != null && info.getClassification() != null && info.getClassification().equals(category)) {
+                result.add(article);
+            }
+        }
+        return result;
     }
 }

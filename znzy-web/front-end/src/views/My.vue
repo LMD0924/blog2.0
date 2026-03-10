@@ -8,6 +8,8 @@ import { EditOutlined, DeleteOutlined, LinkOutlined, GithubOutlined, TwitterOutl
 
 const [messageApi, contextHolder] = message.useMessage();
 const isDark = ref(false);
+// 页面加载状态
+const isLoading = ref(true);
 
 // 用户数据
 const userInfo = reactive({
@@ -84,6 +86,10 @@ const fetchUserInfo = () => {
       github: data.github || '',
       twitter: data.twitter || '',
     });
+    // 当用户信息加载完成后，设置页面加载状态为false
+    setTimeout(() => {
+      isLoading.value = false;
+    }, 500);
   });
 };
 
@@ -222,8 +228,27 @@ onMounted(() => {
 
 <template>
   <contextHolder />
-  <div :class="{ 'dark': isDark }" class="min-h-screen transition-all duration-300 ease-in-out">
-    <div class="bg-gray-50 dark:bg-dark-900 text-gray-800 dark:text-gray-100 min-h-screen py-8">
+  <!-- 页面加载遮罩 -->
+  <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-dark-900 transition-opacity duration-1000"
+       :class="{'opacity-0 pointer-events-none': !isLoading}">
+    <div class="text-center">
+      <div class="relative mb-8">
+        <div class="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto shadow-2xl animate-pulse">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+          </svg>
+        </div>
+        <div class="absolute inset-0 border-4 border-primary/20 border-t-primary rounded-2xl animate-spin"></div>
+      </div>
+      <h3 class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
+        个人信息
+      </h3>
+      <p class="text-gray-600 dark:text-gray-400">加载中...</p>
+    </div>
+  </div>
+  <div :class="{'opacity-0': isLoading, 'opacity-100': !isLoading}" class="transition-opacity duration-1000">
+    <div :class="{ 'dark': isDark }" class="min-h-screen transition-all duration-300 ease-in-out">
+      <div class="global-card bg-gray-50 dark:bg-dark-900 text-gray-800 dark:text-gray-100 min-h-screen py-8">
       <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto">
           <!-- 头部标题 -->
@@ -722,7 +747,9 @@ onMounted(() => {
         </div>
       </a-form>
     </a-modal>
-  </div>
+      </div>
+    </div>
+
 </template>
 
 <style scoped>

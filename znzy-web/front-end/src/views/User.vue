@@ -12,6 +12,8 @@ const authorId = ref(route.params.id || route.query.id || 1)
 
 // 进入动画控制
 const isMounted = ref(false)
+// 页面加载状态
+const isLoading = ref(true)
 
 // 作者信息状态
 const authorInfo = ref({
@@ -53,6 +55,10 @@ const getArticleByUserId = () => {
       authorInfo.value.articles = data.length
     }
     isArticlesLoading.value = false
+    // 当文章加载完成后，设置页面加载状态为false
+    setTimeout(() => {
+      isLoading.value = false
+    }, 500)
   })
 }
 // 检查关注状态
@@ -208,7 +214,25 @@ const favorites = [
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <!-- 页面加载遮罩 -->
+  <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-dark-900 transition-opacity duration-1000"
+       :class="{'opacity-0 pointer-events-none': !isLoading}">
+    <div class="text-center">
+      <div class="relative mb-8">
+        <div class="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto shadow-2xl animate-pulse">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+          </svg>
+        </div>
+        <div class="absolute inset-0 border-4 border-primary/20 border-t-primary rounded-2xl animate-spin"></div>
+      </div>
+      <h3 class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
+        用户信息
+      </h3>
+      <p class="text-gray-600 dark:text-gray-400">加载中...</p>
+    </div>
+  </div>
+  <div :class="{'opacity-0': isLoading, 'opacity-100': !isLoading}" class="container mx-auto px-4 py-8 transition-opacity duration-1000">
     <!-- 消息提示组件 -->
     <contextHolder />
 

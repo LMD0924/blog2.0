@@ -2,7 +2,7 @@
 import { message, Modal } from "ant-design-vue";
 import { useRoute } from "vue-router";
 import { onMounted, reactive, ref, watch, nextTick, onUnmounted, computed } from "vue";
-import { get, post, del } from "@/net/index.js";
+import {get, post, del, put} from "@/net/index.js";
 import { formatDate } from "@/time/Data.js";
 import { MdPreview } from 'md-editor-v3';
 import { MdEditor } from "md-editor-v3";
@@ -15,6 +15,7 @@ const route = useRoute();
 const ArticleId = route.params.id;
 
 // State management
+const isLoading = ref(true);
 const state = reactive({
   article: {
     title: '',
@@ -52,9 +53,9 @@ const showEditModal = ref(false);
 const editForm = reactive({
   title: '',
   content: '',
-  tag:[],
-  category:'',
-  ispublic:true
+  tag: '',
+  category: '',
+  ispublic: true
 });
 
 // Computed properties
@@ -137,7 +138,29 @@ const getArticleById = () => {
       if (data.authorId) {
         getUserById(data.authorId);
       }
+      // 获取文章分类和标签信息
+      getArticleInfo();
       setTimeout(extractHeadings, 100);
+      setTimeout(() => {
+        isLoading.value = false;
+      }, 500);
+    }
+  );
+};
+
+const getArticleInfo = () => {
+  get(
+    `api/articleInfo/getArticleInfoById/${ArticleId}`,
+    {},
+    (message, data) => {
+      if (data) {
+        if (data.classification) {
+          state.article.category = data.classification;
+        }
+        if (data.tag) {
+          state.article.tags = data.tag.split(',');
+        }
+      }
     }
   );
 };
@@ -213,31 +236,73 @@ const checkIsFavorite = () => {
 const openEditModal = () => {
   editForm.title = state.article.title;
   editForm.content = state.article.content;
-  editForm.tag=[...state.article.tags];
-  editForm.category=state.article.category;
-  editForm.ispublic=state.article.ispublic;
+  editForm.tag = Array.isArray(state.article.tags) ? state.article.tags.join(',') : state.article.tags;
+  editForm.category = state.article.category;
+  editForm.ispublic = state.article.ispublic;
   showEditModal.value = true;
 };
 
 const updateArticle = () => {
+  // 处理标签和分类
+  const tagsArray = editForm.tag
+    ? editForm.tag.split(',').map(tag => tag.trim()).filter(tag => tag)
+    : [];
+  const categoryArray = editForm.category
+    ? editForm.category.split(',').map(cat => cat.trim()).filter(cat => cat)
+    : [];
+
+  // 显示加载状态
+  messageApi.loading("正在保存...", 0);
+
+  // 先更新文章主体
   post(
     "api/article/updateArticle",
     {
       id: ArticleId,
       title: editForm.title,
       content: editForm.content,
-      tag: Array.isArray(editForm.tag) ? editForm.tag.join(',') : editForm.tag, // 这里做了修改
-      category: editForm.category,
       ispublic: editForm.ispublic
     },
     (message, data) => {
       if (data) {
-        messageApi.success("文章更新成功！");
-        showEditModal.value = false;
-        Object.assign(state.article, data);
+        // 主体更新成功后，再更新文章信息（分类、标签）
+        updateArticleInfoAfter(tagsArray, categoryArray);
       } else {
+        messageApi.destroy();
         messageApi.error("文章更新失败");
       }
+    },
+    (error) => {
+      messageApi.destroy();
+      messageApi.error("更新失败，请稍后重试");
+    }
+  );
+};
+
+// 更新文章信息的辅助函数
+const updateArticleInfoAfter = (tagsArray, categoryArray) => {
+  const articleInfoData = {
+    articleId: ArticleId,
+    classification: categoryArray.join(','),
+    tag: tagsArray
+  };
+
+  put(
+    "api/articleInfo/updateArticleInfo",
+    articleInfoData,
+    (message, data) => {
+      messageApi.destroy();
+      if (data) {
+        messageApi.success("文章更新成功！");
+        showEditModal.value = false;
+        getArticleById(); // 重新获取最新数据
+      } else {
+        messageApi.error("文章信息更新失败");
+      }
+    },
+    (error) => {
+      messageApi.destroy();
+      messageApi.error("更新失败，请稍后重试");
     }
   );
 };
@@ -347,28 +412,7 @@ const goToUserPage = (userId) => {
   router.push({ path: '/User', query: { id: userId } });
   console.log("跳转用户信息页面,用户ID:",userId)
 };
-// 分类选项
-const categories = ref([
-  { value: '技术', label: '技术' },
-  { value: '生活', label: '生活' },
-  { value: '阅读', label: '阅读' },
-  { value: '算法', label: '算法' },
-  { value: '其他', label: '其他' }
-]);
 
-// 标签选项
-const tagOptions = ref([
-  { value: 'vue', label: 'Vue' },
-  { value: 'react', label: 'React' },
-  { value: 'javascript', label: 'JavaScript' },
-  { value: 'css', label: 'CSS' },
-  { value: 'nodejs', label: 'Node.js' },
-  { value: 'python', label: 'Python' },
-  { value: 'java', label: 'Java' },
-  { value: 'c++', label: 'C++' },
-  { value: 'C', label: 'C' },
-  { value: '其他', label: '其他' }
-]);
 
 // Lifecycle hooks
 onMounted(() => {
@@ -398,7 +442,25 @@ watch(() => state.article.content, (newVal) => {
 
 <template>
   <contextHolder />
-  <div class="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+  <!-- 页面加载遮罩 -->
+  <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-dark-900 transition-opacity duration-1000"
+       :class="{'opacity-0 pointer-events-none': !isLoading}">
+    <div class="text-center">
+      <div class="relative mb-8">
+        <div class="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto shadow-2xl animate-pulse">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+          </svg>
+        </div>
+        <div class="absolute inset-0 border-4 border-primary/20 border-t-primary rounded-2xl animate-spin"></div>
+      </div>
+      <h3 class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
+        文章详情
+      </h3>
+      <p class="text-gray-600 dark:text-gray-400">加载中...</p>
+    </div>
+  </div>
+  <div :class="{'opacity-0': isLoading, 'opacity-100': !isLoading}" class="global-card min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-1000 transition-opacity duration-1000">
     <!-- Main content -->
     <main class="container mx-auto px-4 py-12 flex flex-col lg:flex-row gap-8">
       <!-- Article navigation (left) -->
@@ -498,6 +560,18 @@ watch(() => state.article.content, (newVal) => {
               </div>
             </div>
           </div>
+          <div v-if="state.article.tags && state.article.tags.length" class="mb-8 mt-6">
+            <h4 class="text-sm font-medium mb-3 text-black dark:text-gray-400">文章标签</h4>
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="tag in state.article.tags"
+                :key="tag"
+                class="global-card px-3 py-1.5 bg-gray-100 dark:bg-dark-700 hover:bg-primary/10 dark:hover:bg-primary/20 hover:text-primary rounded-full text-sm transition-colors duration-300 cursor-pointer"
+              >
+                {{ tag }}
+              </span>
+            </div>
+          </div>
         </header>
 
         <!-- Article content -->
@@ -509,18 +583,6 @@ watch(() => state.article.content, (newVal) => {
 
         <!-- Article footer -->
         <footer class="p-8 border-t border-gray-100 dark:border-dark-700">
-          <div v-if="state.article.tags && state.article.tags.length" class="mb-8">
-            <h4 class="text-sm font-medium mb-3 text-gray-500 dark:text-gray-400">文章标签</h4>
-            <div class="flex flex-wrap gap-2">
-              <span
-                v-for="tag in state.article.tags"
-                :key="tag"
-                class="px-3 py-1.5 bg-gray-100 dark:bg-dark-700 hover:bg-primary/10 dark:hover:bg-primary/20 hover:text-primary rounded-full text-sm transition-colors duration-300 cursor-pointer"
-              >
-                {{ tag }}
-              </span>
-            </div>
-          </div>
 
           <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div class="flex space-x-4">
@@ -653,22 +715,21 @@ watch(() => state.article.content, (newVal) => {
           <a-input v-model:value="editForm.title" />
         </a-form-item>
 
-        <!-- 添加分类选择 -->
+        <!-- 添加分类输入 -->
         <a-form-item label="分类">
-          <a-select
+          <a-input
             v-model:value="editForm.category"
-            placeholder="选择分类"
-            :options="categories"
+            placeholder="请输入文章分类（如：技术、生活、阅读等）"
+            class="h-14 rounded-xl border-gray-200 dark:border-dark-700 focus:border-primary transition-all"
           />
         </a-form-item>
 
-        <!-- 添加标签选择 -->
+        <!-- 添加标签输入 -->
         <a-form-item label="标签">
-          <a-select
+          <a-input
             v-model:value="editForm.tag"
-            mode="multiple"
-            placeholder="选择标签"
-            :options="tagOptions"
+            placeholder="请输入标签，多个标签用逗号分隔（如：Vue,JavaScript,前端）"
+            class="h-14 rounded-xl border-gray-200 dark:border-dark-700 focus:border-primary transition-all"
           />
         </a-form-item>
 
@@ -676,11 +737,13 @@ watch(() => state.article.content, (newVal) => {
         <a-form-item label="发布设置">
           <a-space>
             <a-switch
-              v-model:checked="editForm.isPublic"
+              v-model:checked="editForm.ispublic"
               checked-children="公开"
               un-checked-children="私密"
+              checked-color="#1677ff"
+              class="transition-all"
             />
-            <span>设为私密后仅自己可见</span>
+            <span class="text-gray-500 text-sm">设为私密后仅自己可见</span>
           </a-space>
         </a-form-item>
 

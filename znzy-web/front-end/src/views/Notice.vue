@@ -49,6 +49,8 @@ const getUserInfo = () => {
    })
  })
 }
+// 页面加载状态
+const isLoading = ref(true)
 // 历史通知列表
 const noticeHistory = ref([])
 
@@ -56,6 +58,10 @@ const noticeHistory = ref([])
 const loadNoticeHistory = () => {
   get('api/notice/SelectAllNotice', {}, (message,data) => {
     noticeHistory.value = data.filter(item=>item.userId===formData.User.id)
+    // 当数据加载完成后，设置页面加载状态为false
+    setTimeout(() => {
+      isLoading.value = false
+    }, 500)
   })
 }
 
@@ -116,7 +122,25 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <!-- 页面加载遮罩 -->
+  <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-dark-900 transition-opacity duration-1000"
+       :class="{'opacity-0 pointer-events-none': !isLoading}">
+    <div class="text-center">
+      <div class="relative mb-8">
+        <div class="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto shadow-2xl animate-pulse">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+          </svg>
+        </div>
+        <div class="absolute inset-0 border-4 border-primary/20 border-t-primary rounded-2xl animate-spin"></div>
+      </div>
+      <h3 class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
+        发布通知
+      </h3>
+      <p class="text-gray-600 dark:text-gray-400">加载中...</p>
+    </div>
+  </div>
+  <div :class="{'opacity-0': isLoading, 'opacity-100': !isLoading}" class="container mx-auto px-4 py-8 transition-opacity duration-1000">
     <context-holder />
 
     <!-- 页面标题 -->

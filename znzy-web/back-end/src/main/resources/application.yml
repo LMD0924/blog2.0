@@ -26,3 +26,28 @@ file:
   upload-dir: uploads/
 server:
   port: 8080
+
+mybatis-plus:
+  # 实体类包路径，用于别名扫描
+  type-aliases-package: com.example.backend.entity
+
+  # Mapper XML 文件位置（如果使用 XML）
+  mapper-locations: classpath*:/mapper/**/*.xml
+
+  # 全局配置
+  global-config:
+    db-config:
+      # 主键类型（AUTO：数据库自增，INPUT：手动输入，ASSIGN_ID：雪花算法）
+      id-type: AUTO
+      # 表名前缀（如果有统一前缀，例如 t_）
+      # table-prefix: t_
+      # 逻辑删除字段名
+#      logic-delete-field: deleted
+#      logic-delete-value: 1
+#      logic-not-delete-value: 0
+
+  # 控制台打印 SQL 语句（开发环境建议开启）
+  configuration:
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 开启驼峰命名自动映射（如数据库字段 create_time 映射为 createTime）
+    map-underscore-to-camel-case: true

@@ -93,6 +93,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+
+<!--        mybatis-plus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.7</version>  <!-- 请使用最新稳定版 -->
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>

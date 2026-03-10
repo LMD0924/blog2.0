@@ -35,6 +35,10 @@ public interface ArticleMapper {
     @Update("UPDATE article_info SET tag=#{tag}, classification=#{classification} " +
             "WHERE articleId=#{articleId} AND authorId=#{authorId}")
     int updateArticleInfo(int articleId, int authorId, String tag, String classification);
+    
+    // 根据文章ID获取文章扩展信息
+    @Select("SELECT * FROM article_info WHERE articleId=#{articleId}")
+    ArticleInfo getArticleInfoById(int articleId);
 
     //删除文章
     @Delete("DELETE from article where id=#{id} and authorId=#{authorId}")

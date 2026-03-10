@@ -1,5 +1,23 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <!-- 页面加载遮罩 -->
+  <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-dark-900 transition-opacity duration-1000"
+       :class="{'opacity-0 pointer-events-none': !isLoading}">
+    <div class="text-center">
+      <div class="relative mb-8">
+        <div class="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto shadow-2xl animate-pulse">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <div class="absolute inset-0 border-4 border-primary/20 border-t-primary rounded-2xl animate-spin"></div>
+      </div>
+      <h3 class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
+        备忘录
+      </h3>
+      <p class="text-gray-600 dark:text-gray-400">加载中...</p>
+    </div>
+  </div>
+  <div :class="{'opacity-0': isLoading, 'opacity-100': !isLoading}" class="container mx-auto px-4 py-8 transition-opacity duration-1000">
     <!-- 页面标题和操作按钮 -->
     <div class="flex justify-between items-center mb-8 animate-fade-in">
       <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary dark:from-primary-light dark:to-secondary-light">我的备忘录</h1>
@@ -204,8 +222,10 @@ import {get, post, put} from "@/net/index.js";
 
 const [messageApi] = message.useMessage();
 
+// 页面加载状态
+const isLoading = ref(true)
 // 备忘录数据
-const memos = ref([]);
+const memos = ref([])
 const User=ref([])
 const getCurrentUser=()=>{
   get('api/user/current',{},(message,data)=>{
@@ -221,6 +241,10 @@ const getAllPlan=()=>{
     console.log(data)
       memos.value=data
       console.log(memos.value)
+      // 当数据加载完成后，设置页面加载状态为false
+      setTimeout(() => {
+        isLoading.value = false
+      }, 500)
     })
 }
 const addPlan = () => {

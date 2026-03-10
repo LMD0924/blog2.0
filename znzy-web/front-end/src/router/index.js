@@ -99,6 +99,21 @@ const router = createRouter({
           path:'/calendar',
           name:'日历',
           component:()=>import('@/views/calendar.vue')
+        },
+        {
+          path:'/Archives',
+          name:'归档',
+          component:()=>import('@/components/Archives.vue')
+        },
+        {
+          path:'/Categories',
+          name:'分类',
+          component:()=>import('@/components/Categories.vue')
+        },
+        {
+          path:'/Tags',
+          name:'标签',
+          component:()=>import('@/components/Tags.vue')
         }
       ]
     },

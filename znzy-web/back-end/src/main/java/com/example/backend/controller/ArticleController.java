@@ -92,8 +92,6 @@ public class ArticleController {
     public RestBean<Article> updateArticle(@RequestParam("id") Integer id,
                                            @RequestParam("title") String title,
                                            @RequestParam("content") String content,
-                                           @RequestParam("tag") String tag,
-                                           @RequestParam("category") String category,
                                            @RequestParam("ispublic") Boolean ispublic,
                                            HttpServletRequest request){
         int authorId=(Integer) request.getAttribute("id");//获取当前登录用户的ID
@@ -101,7 +99,7 @@ public class ArticleController {
         if(article==null||!article.getAuthorId().equals(authorId)){
             return RestBean.failure(404,"文章不存在或无权更新");
         }
-        int status=articleService.updateArticle(id,authorId,title,content,new Date(),tag,category,ispublic);
+        int status=articleService.updateArticle(id,authorId,title,content,new Date(),ispublic);
         if(status==1){
             Article updatedArticle = articleService.getArticleById(authorId, id);
             return RestBean.success("文章更新成功！", updatedArticle);
@@ -155,5 +153,19 @@ public class ArticleController {
     public RestBean<List<Article>> searchArticles(@RequestParam("keyword") String keyword) {
         List<Article> articles = articleService.searchArticlesByTitle(keyword);
         return RestBean.success("搜索成功", articles);
+    }
+
+    // 根据标签查询文章
+    @GetMapping("/getArticlesByTag")
+    public RestBean<List<Article>> getArticlesByTag(@RequestParam("tag") String tag) {
+        List<Article> articles = articleService.getArticlesByTag(tag);
+        return RestBean.success("获取成功", articles);
+    }
+
+    // 根据分类查询文章
+    @GetMapping("/getArticlesByCategory")
+    public RestBean<List<Article>> getArticlesByCategory(@RequestParam("category") String category) {
+        List<Article> articles = articleService.getArticlesByCategory(category);
+        return RestBean.success("获取成功", articles);
     }
 }
